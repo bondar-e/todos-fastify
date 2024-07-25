@@ -2,5 +2,5 @@
   "watch": ["src"],
   "ext": "ts",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node src/index.ts"
+  "exec": "FASTIFY_AUTOLOAD_TYPESCRIPT=1 VITEST=true node --import ./ts-node.register.mjs src/index.ts"
 }

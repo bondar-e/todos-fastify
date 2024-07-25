@@ -1,7 +1,7 @@
 import { fastifyOauth2 } from '@fastify/oauth2';
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
-import { GOOGLE_API, GOOGLE_API_CALLBACK } from '../constants/paths';
+import { GOOGLE_API, GOOGLE_API_CALLBACK } from '../constants/paths.js';
 
 const authPlugin = async (fastify: FastifyInstance) => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -17,7 +17,7 @@ const authPlugin = async (fastify: FastifyInstance) => {
     startRedirectPath: GOOGLE_API,
     callbackUri: `${process.env.HOST_URL}${GOOGLE_API_CALLBACK}`,
     discovery: {
-      issuer: process.env.GOOGLE_DISCOVERY_URL,
+      issuer: 'https://accounts.google.com/.well-known/openid-configuration',
     },
   });
 };

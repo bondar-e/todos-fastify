@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { GOOGLE_API_CALLBACK } from '../constants/paths';
+import { GOOGLE_API_CALLBACK } from '../constants/paths.js';
 
 const auth = async (fastify: FastifyInstance) => {
   fastify.get(GOOGLE_API_CALLBACK, async (request, reply) => {

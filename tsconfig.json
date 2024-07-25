@@ -1,16 +1,19 @@
 {
   "extends": "fastify-tsconfig",
   "ts-node": {
-    "files": true
+    "files": true,
   },
   "compilerOptions": {
-    "outDir": "build",
+    "rootDir": "./src",
+    "outDir": "./build",
     "sourceMap": true,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "target": "ES2022",
+    "target": "ESNext",
     "esModuleInterop": true,
-    "declaration": true
+    "declaration": true,
+    "skipLibCheck": false,
+    "strict": true
   },
   "include": ["src/**/*.ts", "index.d.ts"],
   "exclude": ["node_modules"]
