@@ -6,3 +6,6 @@ dist/
 build/
 
 .vscode/
+
+src/plugins/secret-key
+src/plugins/jwt-key

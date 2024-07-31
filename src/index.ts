@@ -1,12 +1,13 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fastifyAutoload from '@fastify/autoload';
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import * as dotenv from 'dotenv';
 import fastify from 'fastify';
 
 dotenv.config();
 
-const server = fastify();
+const server = fastify().withTypeProvider<TypeBoxTypeProvider>();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,7 +19,8 @@ server.register(fastifyAutoload, {
 
 // routes
 server.register(fastifyAutoload, {
-  dir: join(__dirname, 'routes'),
+  dir: join(__dirname, 'modules/auth'),
+  ignorePattern: /.*(controller|schema)\.*/,
 });
 
 server.get('/', async (request, reply) => {

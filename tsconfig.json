@@ -1,7 +1,7 @@
 {
   "extends": "fastify-tsconfig",
   "ts-node": {
-    "files": true,
+    "files": true
   },
   "compilerOptions": {
     "rootDir": "./src",
@@ -15,6 +15,6 @@
     "skipLibCheck": false,
     "strict": true
   },
-  "include": ["src/**/*.ts", "index.d.ts"],
+  "include": ["src/**/*.ts", "src/@types"],
   "exclude": ["node_modules"]
 }
