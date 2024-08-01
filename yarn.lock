@@ -77,7 +77,7 @@
   resolved "https://registry.npmjs.org/@fastify/autoload/-/autoload-5.10.0.tgz"
   integrity sha512-4A6s86qMbjcpWHmJL7cErtjIxOPuW8c67DLiuO8HoJQxuK97vaptoUnK5BTOwRg1ntYqfc3tjwerTTo5NQ3fEQ==
 
-"@fastify/cookie@^9.0.4", "@fastify/cookie@^9.3.1":
+"@fastify/cookie@^9.0.4":
   version "9.3.1"
   resolved "https://registry.npmjs.org/@fastify/cookie/-/cookie-9.3.1.tgz"
   integrity sha512-h1NAEhB266+ZbZ0e9qUE6NnNR07i7DnNXWG9VbbZ8uC6O/hxHpl+Zoe5sw1yfdZ2U6XhToUGDnzQtWJdCaPwfg==

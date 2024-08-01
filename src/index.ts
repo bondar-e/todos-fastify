@@ -27,6 +27,10 @@ server.get('/', async (request, reply) => {
   return { page: 'home' };
 });
 
+server.setErrorHandler((error, _request, reply) => {
+  reply.code(error.statusCode ?? 500).send(error);
+});
+
 server.listen(
   {
     port: 3000,

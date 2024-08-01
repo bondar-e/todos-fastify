@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { CustomError } from '../../helpers/CustomError/CustomError.js';
 import type { FastifyReplyTypebox, FastifyRequestTypebox } from '../../types.js';
 import type { AuthSignInSchema, AuthSignupSchema } from './auth.schema.js';
 
@@ -9,32 +10,26 @@ const signup =
     request: FastifyRequestTypebox<typeof AuthSignupSchema>,
     reply: FastifyReplyTypebox<typeof AuthSignupSchema>,
   ) => {
-    try {
-      const { email, first_name, last_name, password } = request.body;
+    const { email, first_name, last_name, password } = request.body;
 
-      const hashPassword = await bcrypt.hash(password, 10);
-      const dbUser = await fastify.prisma.users.findUnique({ where: { email } });
+    const hashPassword = await bcrypt.hash(password, 10);
+    const dbUser = await fastify.prisma.users.findUnique({ where: { email } });
 
-      if (dbUser) {
-        return reply.code(409).send({
-          message: 'User with that email already exists',
-        });
-      }
-
-      const user = await fastify.prisma.users.create({
-        data: {
-          email,
-          first_name,
-          last_name,
-          password: hashPassword,
-          auth_type: 'EMAIL',
-        },
-      });
-
-      reply.code(201).send({ user });
-    } catch (error) {
-      reply.code(500).send(error);
+    if (dbUser) {
+      throw new CustomError(409, 'User with that email already exists');
     }
+
+    const user = await fastify.prisma.users.create({
+      data: {
+        email,
+        first_name,
+        last_name,
+        password: hashPassword,
+        auth_type: 'EMAIL',
+      },
+    });
+
+    reply.code(201).send({ user });
   };
 
 const signIn =
@@ -43,24 +38,18 @@ const signIn =
     request: FastifyRequestTypebox<typeof AuthSignInSchema>,
     reply: FastifyReplyTypebox<typeof AuthSignInSchema>,
   ) => {
-    try {
-      const { email, password } = request.body;
+    const { email, password } = request.body;
 
-      const user = await fastify.prisma.users.findUnique({ where: { email: email } });
-      const isMatch = user && (await bcrypt.compare(password, user.password || ''));
+    const user = await fastify.prisma.users.findUnique({ where: { email: email } });
+    const isMatch = user && (await bcrypt.compare(password, user.password || ''));
 
-      if (!user || !isMatch) {
-        return reply.code(401).send({
-          message: 'Invalid email or password',
-        });
-      }
-
-      const { password: userPassword, auth_type, ...userData } = user;
-
-      reply.code(200).send({ user: userData });
-    } catch (error) {
-      reply.code(500).send(error);
+    if (!user || !isMatch) {
+      throw new CustomError(401, 'Invalid email or password');
     }
+
+    const { password: userPassword, auth_type, ...userData } = user;
+
+    reply.code(200).send({ user: userData });
   };
 
 const googleAuth = (fastify: FastifyInstance) => async (request: FastifyRequest, reply: FastifyReply) => {
