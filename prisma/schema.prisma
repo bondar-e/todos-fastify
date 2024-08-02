@@ -15,7 +15,7 @@ model Roles {
 
 model Tasks {
   id                          String  @id(map: "tasks_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                        String  @db.Char(255)
+  name                        String  @db.VarChar(255)
   assignee                    String? @db.Uuid
   description                 String?
   reporter                    String  @db.Uuid

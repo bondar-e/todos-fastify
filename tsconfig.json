@@ -13,8 +13,9 @@
     "esModuleInterop": true,
     "declaration": true,
     "skipLibCheck": false,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./src"
   },
-  "include": ["src/**/*.ts", "src/@types"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/@types", "src/modules/auth/index.js"],
+  "exclude": ["./node_modules"]
 }

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { CustomError } from '../../helpers/CustomError/CustomError.js';
-import type { FastifyReplyTypebox, FastifyRequestTypebox } from '../../types.js';
+import type { FastifyReplyTypebox, FastifyRequestTypebox } from 'types.js';
 import type { AuthSignInSchema, AuthSignupSchema } from './auth.schema.js';
 
 const signup =

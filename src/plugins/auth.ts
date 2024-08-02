@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Authenticator, Strategy } from '@fastify/passport';
+import { Authenticator } from '@fastify/passport';
 import fastifySecureSession from '@fastify/secure-session';
 import type { FastifyInstance } from 'fastify';
 import fastifyPlugin from 'fastify-plugin';
@@ -59,10 +59,7 @@ const authPlugin = async (fastify: FastifyInstance) => {
     ),
   );
 
-  fastifyPassport.use('local', new Strategy('local'));
-
   fastify.decorate('googleAuth', fastifyPassport.authenticate('google', { scope: ['profile', 'email'] }));
-  fastify.decorate('authenticate', fastifyPassport.authenticate('local', { successRedirect: '/', authInfo: false }));
 };
 
 export default fastifyPlugin(authPlugin);

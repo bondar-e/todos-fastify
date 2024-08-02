@@ -19,8 +19,9 @@ server.register(fastifyAutoload, {
 
 // routes
 server.register(fastifyAutoload, {
-  dir: join(__dirname, 'modules/auth'),
+  dir: join(__dirname, 'modules'),
   ignorePattern: /.*(controller|schema)\.*/,
+  dirNameRoutePrefix: false,
 });
 
 server.get('/', async (request, reply) => {
