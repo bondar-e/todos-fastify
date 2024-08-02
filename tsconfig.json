@@ -4,14 +4,18 @@
     "files": true
   },
   "compilerOptions": {
-    "outDir": "build",
+    "rootDir": "./src",
+    "outDir": "./build",
     "sourceMap": true,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "target": "ES2022",
+    "target": "ESNext",
     "esModuleInterop": true,
-    "declaration": true
+    "declaration": true,
+    "skipLibCheck": false,
+    "strict": true,
+    "baseUrl": "./src"
   },
-  "include": ["src/**/*.ts", "index.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/@types", "src/modules/auth/index.js"],
+  "exclude": ["./node_modules"]
 }

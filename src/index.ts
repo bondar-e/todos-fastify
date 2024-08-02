@@ -1,25 +1,35 @@
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import fastifyAutoload from '@fastify/autoload';
+import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import * as dotenv from 'dotenv';
 import fastify from 'fastify';
-import authPlugin from './plugins/authPlugin';
-import configPlugin from './plugins/configPlugin';
-import cookies from './plugins/cookies';
-import cors from './plugins/cors';
-import db from './plugins/db';
-import auth from './routers/auth';
 
-const server = fastify();
+dotenv.config();
+
+const server = fastify().withTypeProvider<TypeBoxTypeProvider>();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // plugins
-server.register(configPlugin);
-server.register(cookies);
-server.register(cors);
-server.register(db);
-server.register(authPlugin);
+server.register(fastifyAutoload, {
+  dir: join(__dirname, 'plugins'),
+});
 
 // routes
-server.register(auth);
+server.register(fastifyAutoload, {
+  dir: join(__dirname, 'modules'),
+  ignorePattern: /.*(controller|schema)\.*/,
+  dirNameRoutePrefix: false,
+});
 
 server.get('/', async (request, reply) => {
   return { page: 'home' };
+});
+
+server.setErrorHandler((error, _request, reply) => {
+  reply.code(error.statusCode ?? 500).send(error);
 });
 
 server.listen(
